@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class GuessGame {
   private static final Logger LOG = Logger.getLogger(GuessGame.class.getName());
 
-  // The results for a player making a guess.
+    // The results for a player making a guess.
   public enum GuessResult {INVALID, WRONG, WON, LOST}
 
   //
@@ -143,6 +143,10 @@ public class GuessGame {
    */
   public synchronized boolean isFinished() {
     return GuessResult.WON.equals(lastResult) || GuessResult.LOST.equals(lastResult);
+  }
+
+  public synchronized boolean isWon() {
+    return GuessResult.WON.equals(lastResult); //idk if i should touch isFinished, so im just getting this return
   }
 
   /**

@@ -20,6 +20,7 @@ public class PlayerServices {
 
   final static String NO_WINS_MESSAGE = "You have not won a game, yet. But I *feel* your luck changing.";
   final static String GAMES_PLAYED_FORMAT = "You have won an average of %.1f%% of this session's %d game.";
+  final static String NO_STAT = "No game stats yet"; //added criteria #1 string
 
   //
   // Attributes
@@ -29,6 +30,9 @@ public class PlayerServices {
   private GuessGame game;
   // The gameCenter provides sitewide features for all the games and players.
   private final GameCenter gameCenter;
+
+  private int seshGamesNum = 0; //gotta keep track for later on
+  private int seshGamesWon = 0;
 
   /**
    * Construct a new {@Linkplain PlayerServices} but wait for the player to want to start a game.
@@ -71,7 +75,13 @@ public class PlayerServices {
   public synchronized GuessResult makeGuess(int guess) {
     GuessResult result = game.makeGuess(guess);
     if (game.isFinished()) {
-        gameCenter.gameFinished();
+
+      seshGamesNum++; //gotta add so we know that the game has been played
+      gameCenter.gameFinished();
+    }
+    if (game.isWon()) {
+      seshGamesWon++; //adding to the num if player won
+      gameCenter.setGamesWon();
     }
     return result;
   }
@@ -109,6 +119,21 @@ public class PlayerServices {
    */
   public int guessesLeft() {
     return game.guessesLeft();
+  }
+
+  //This bit was just me copying from GameCenter and changing the vars to suit this area
+
+  public synchronized String getGameStatsMessage() {
+    if (seshGamesNum > 1) {
+      //time for percent math
+      float percent = ((float) seshGamesWon / (float) seshGamesNum) * 100;
+      return String.format(GAMES_PLAYED_FORMAT, seshGamesNum, percent);
+
+    } else if (seshGamesNum == 0) {
+      return NO_STAT;
+    } else {
+      return NO_WINS_MESSAGE;
+    }
   }
 
 }
