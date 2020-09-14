@@ -13,7 +13,7 @@ public class GuessGame {
   private static final Logger LOG = Logger.getLogger(GuessGame.class.getName());
 
   // The results for a player making a guess.
-  public enum GuessResult {INVALID, WRONG, WON, LOST}
+  public enum GuessResult {INVALID, WRONG, WON, LOST, HIGHER, LOWER}
 
   //
   // Constants
@@ -127,7 +127,12 @@ public class GuessGame {
       if (isCorrect) {
         thisResult = GuessResult.WON;
       } else if (hasMoreGuesses()) {
-        thisResult = GuessResult.WRONG;
+        if (myGuess < numberToGuess) {
+          thisResult = GuessResult.LOWER; //HINTS
+        }
+        else {
+          thisResult = GuessResult.HIGHER;
+        }
       } else {
         thisResult = GuessResult.LOST;
       }

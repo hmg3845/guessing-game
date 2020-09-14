@@ -16,7 +16,7 @@ public class GameCenter {
   private static final Logger LOG = Logger.getLogger(GameCenter.class.getName());
 
   //
-  // Constants
+  // Constants-
   //
 
   // Output strings made public for unit test access
