@@ -30,6 +30,7 @@ public class GameCenter {
 
   private int totalGames = 0;
   private int gamesWon = 0;
+  private PlayerServices playerServices; //cuz those are for the session???
 
   //
   // Constructors
@@ -95,5 +96,9 @@ public class GameCenter {
     } else {
       return NO_GAMES_MESSAGE;
     }
+  }
+
+  public PlayerServices getPlayerServices() {
+    return playerServices;
   }
 }

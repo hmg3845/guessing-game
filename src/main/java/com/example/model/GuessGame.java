@@ -127,7 +127,7 @@ public class GuessGame {
       if (isCorrect) {
         thisResult = GuessResult.WON;
       } else if (hasMoreGuesses()) {
-        if (myGuess < numberToGuess) {
+        if (myGuess > numberToGuess) { //LOCAL DUMBASS MIXES UP SIGNS
           thisResult = GuessResult.LOWER; //HINTS
         }
         else {

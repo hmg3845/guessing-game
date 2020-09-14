@@ -20,6 +20,7 @@ public class PlayerServices {
 
   final static String NO_WINS_MESSAGE = "You have not won a game, yet. But I *feel* your luck changing.";
   final static String GAMES_PLAYED_FORMAT = "You have won an average of %.1f%% of this session's %d game.";
+  final static String NO_STATS = "No game stats yet."; //criteria string addition
 
   //
   // Attributes
@@ -29,6 +30,9 @@ public class PlayerServices {
   private GuessGame game;
   // The gameCenter provides sitewide features for all the games and players.
   private final GameCenter gameCenter;
+
+  private int seshPlayed = 0;
+  private int seshWon = 0;
 
   /**
    * Construct a new {@Linkplain PlayerServices} but wait for the player to want to start a game.
