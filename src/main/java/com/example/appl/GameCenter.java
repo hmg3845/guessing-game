@@ -30,6 +30,7 @@ public class GameCenter {
 
   private int totalGames = 0;
   private int gamesWon = 0;
+  private PlayerServices playerServices;
 
   //
   // Constructors
@@ -51,7 +52,11 @@ public class GameCenter {
     return new PlayerServices(this);
   }
 
-  /**
+    public PlayerServices getPlayerServices() { //gotta make this getter in order to grab in route
+        return playerServices;
+    }
+
+    /**
    * Create a new {@Linkplain GuessGame} game.
    *
    * @return
