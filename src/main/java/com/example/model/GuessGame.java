@@ -150,6 +150,10 @@ public class GuessGame {
     return GuessResult.WON.equals(lastResult) || GuessResult.LOST.equals(lastResult);
   }
 
+  public synchronized boolean isWon() { //for counting wins later
+    return GuessResult.WON.equals((lastResult));
+  }
+
   /**
    * Queries whether the user has more guesses for this game.
    *

@@ -22,13 +22,14 @@ public class GameCenter {
   // Output strings made public for unit test access
   public final static String NO_GAMES_MESSAGE = "No games have been played so far.";
   public final static String ONE_GAME_MESSAGE = "One game has been played so far.";
-  public final static String GAMES_PLAYED_FORMAT = "There have been %d games played.";
+  public final static String GAMES_PLAYED_FORMAT = "There have been %d games played." + "\nYou have won an average of %.1f%% of games played."; //criteria string edit
 
   //
   // Attributes
   //
 
   private int totalGames = 0;
+  private int gamesWon = 0;
 
   //
   // Constructors
@@ -71,6 +72,15 @@ public class GameCenter {
   }
 
   /**
+   * Collect sitewide statistics when a game is won.
+   */
+  public void gameWon() {
+    synchronized (this) {
+      gamesWon++;
+    }
+  }
+
+  /**
    * Get a user message about the sitewide statistics.
    *
    * @return
@@ -78,7 +88,8 @@ public class GameCenter {
    */
   public synchronized String getGameStatsMessage() {
     if (totalGames > 1) {
-      return String.format(GAMES_PLAYED_FORMAT, totalGames);
+      float percent = ((float) gamesWon / (float) totalGames) * 100;
+      return String.format(GAMES_PLAYED_FORMAT, totalGames, percent); //hopefully this bit works?????????
     } else if (totalGames == 1) {
       return ONE_GAME_MESSAGE;
     } else {
