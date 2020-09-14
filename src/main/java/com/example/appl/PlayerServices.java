@@ -31,7 +31,7 @@ public class PlayerServices {
   // The gameCenter provides sitewide features for all the games and players.
   private final GameCenter gameCenter;
 
-  private int seshPlayed = 0;
+  private int seshPlayed = 0; //idk if making these was redundant but like.i feel they need to be here
   private int seshWon = 0;
 
   /**
@@ -75,7 +75,12 @@ public class PlayerServices {
   public synchronized GuessResult makeGuess(int guess) {
     GuessResult result = game.makeGuess(guess);
     if (game.isFinished()) {
-        gameCenter.gameFinished();
+      seshPlayed++;
+      gameCenter.gameFinished();
+    }
+    if (game.isWon()) {
+      seshWon++;
+      gameCenter.gameWon();
     }
     return result;
   }
@@ -113,6 +118,17 @@ public class PlayerServices {
    */
   public int guessesLeft() {
     return game.guessesLeft();
+  }
+
+  public synchronized String getPlayerStatsMessage() {
+    if (seshPlayed > 1) {
+      float percent = ((float) seshWon / (float) seshPlayed) * 100;
+      return String.format(GAMES_PLAYED_FORMAT, seshPlayed, percent);
+    } else if (seshPlayed == 0) {
+      return NO_STATS;
+    } else {
+      return NO_WINS_MESSAGE;
+    }
   }
 
 }

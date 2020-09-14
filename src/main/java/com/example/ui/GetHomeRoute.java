@@ -29,6 +29,7 @@ public class GetHomeRoute implements Route {
   // Values used in the view-model map for rendering the home view.
   static final String TITLE_ATTR = "title";
   static final String GAME_STATS_MSG_ATTR = "gameStatsMessage";
+  static final String PLAYER_STATS_MSG_ATTR = "playerStatsMessage";
   static final String NEW_PLAYER_ATTR = "newPlayer";
   static final String TITLE = "Welcome to the Guessing Game";
   static final String VIEW_NAME = "home.ftl";
@@ -91,6 +92,8 @@ public class GetHomeRoute implements Route {
       // get the object that will provide client-specific services for this player
       final PlayerServices playerService = gameCenter.newPlayerServices();
       httpSession.attribute(PLAYERSERVICES_KEY, playerService);
+
+      vm.put(PLAYER_STATS_MSG_ATTR, playerService.getPlayerStatsMessage());
 
       // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
       // be called when the session is invalidated. The next invocation of this route will
