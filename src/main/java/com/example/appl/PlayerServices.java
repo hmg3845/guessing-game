@@ -123,7 +123,7 @@ public class PlayerServices {
   public synchronized String getPlayerStatsMessage() {
     if (seshPlayed > 1) {
       float percent = ((float) seshWon / (float) seshPlayed) * 100;
-      return String.format(GAMES_PLAYED_FORMAT, seshPlayed, percent);
+      return String.format(GAMES_PLAYED_FORMAT, percent, seshPlayed);
     } else if (seshPlayed == 0) {
       return NO_STATS;
     } else {
