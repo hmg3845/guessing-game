@@ -13,7 +13,7 @@
       <p>
         ${gameStatsMessage}
         <br/><br/>
-        ${playerStatsMessage} <!-- I SURE HOPE THIS SHIT WORKS OR ELSE I GIVE UP AND ILL LEGIT CRAM PLAYER SHIT INTO GAMECENTER, OH WOW IT STILL DOESTN WORK -->
+        ${playerStatsMessage}
       </p>
       
       <#if newPlayer>

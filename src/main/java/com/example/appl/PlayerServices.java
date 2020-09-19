@@ -19,7 +19,7 @@ public class PlayerServices {
   //
 
   final static String NO_WINS_MESSAGE = "You have not won a game, yet. But I *feel* your luck changing.";
-  final static String GAMES_PLAYED_FORMAT = "You have won an average of %.1f%% of this session's %d game.";
+  final static String GAMES_PLAYED_FORMAT = "You have won an average of %.1f%% of this session's %d games.";
   final static String NO_STATS = "No game stats yet."; //criteria string addition
 
   //

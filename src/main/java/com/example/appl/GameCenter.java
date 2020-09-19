@@ -21,8 +21,7 @@ public class GameCenter {
 
   // Output strings made public for unit test access
   public final static String NO_GAMES_MESSAGE = "No games have been played so far.";
-  public final static String ONE_GAME_MESSAGE = "One game has been played so far.";
-  //public final static String GAMES_PLAYED_FORMAT = "You have won an average of %.1f%% of this sessions %d games."; //criteria string edit
+  public final static String ONE_GAME_MESSAGE = "One game has been played so far." + "\nYou have won an average of %.1f%% of this session's %d games.";
 
   //
   // Attributes
@@ -93,9 +92,9 @@ public class GameCenter {
    *   The message to the user about global game statistics.
    */
   public synchronized String getGameStatsMessage() {
-
     if (totalGames == 1) {
-      return ONE_GAME_MESSAGE;
+      float percent = ((float) gamesWon / (float) totalGames) * 100;
+      return String.format(ONE_GAME_MESSAGE, percent, totalGames); //FIX 0.3: adjusted in order not to skip outputs.
     } else if (totalGames == 0){
       return NO_GAMES_MESSAGE;
     }
