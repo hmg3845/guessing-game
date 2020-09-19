@@ -126,8 +126,10 @@ public class PlayerServices {
       return String.format(GAMES_PLAYED_FORMAT, percent, seshPlayed);
     } else if (seshPlayed == 0) {
       return NO_STATS;
-    } else {
+    } else if (seshWon == 0 & seshPlayed > 0) {
       return NO_WINS_MESSAGE;
+    } else {
+        return "";
     }
   }
 

@@ -93,14 +93,14 @@ public class GameCenter {
    *   The message to the user about global game statistics.
    */
   public synchronized String getGameStatsMessage() {
-    if (totalGames > 1) {
-      //float percent = ((float) gamesWon / (float) totalGames) * 100;
-      //return String.format(GAMES_PLAYED_FORMAT, percent, totalGames); //FIX 0.1: adjusted order for formatting.
-      return ""; //FIX 0.2: Got rid of this cuz it was printing extra info that was unneeded
-    } else if (totalGames == 1) {
+
+    if (totalGames == 1) {
       return ONE_GAME_MESSAGE;
-    } else {
+    } else if (totalGames == 0){
       return NO_GAMES_MESSAGE;
+    }
+    else {
+      return "";
     }
   }
 }
