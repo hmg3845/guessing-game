@@ -24,12 +24,14 @@ public class GuessGame {
    * components to read it; especially for unit testing.
    */
   public static final int UPPER_BOUND = 10;
+  public static final int UPPER_BOUND_DIFF = 24; //added for difficulty enhancement
 
   /**
    * The number of guess attempts alloted. This is public so that other
    * components to read it; especially for unit testing.
    */
   public static final int NUM_OF_GUESSES = 3;
+  public static final int NUM_OF_GUESSES_MODERATE = 5; //added for difficulty enhancement
 
   private static final Random RANDOM = new Random();
 
@@ -69,7 +71,7 @@ public class GuessGame {
    *
    */
   public GuessGame() {
-    this(RANDOM.nextInt(UPPER_BOUND));
+      this(RANDOM.nextInt(UPPER_BOUND));
   }
 
   //
