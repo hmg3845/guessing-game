@@ -49,7 +49,8 @@ public class GameCenter {
    */
   public PlayerServices newPlayerServices() {
     LOG.fine("New player services instance created.");
-    return new PlayerServices(this);
+    playerServices =  new PlayerServices(this);
+    return playerServices; //realised i MAY not be able to sue the getter if i dint change this bit here
   }
 
     public PlayerServices getPlayerServices() { //gotta make this getter in order to grab in route
