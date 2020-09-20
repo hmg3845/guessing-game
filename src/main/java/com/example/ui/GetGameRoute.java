@@ -28,6 +28,7 @@ public class GetGameRoute implements Route {
   static final String GUESSES_LEFT_ATTR = "guessesLeft";
   static final String TITLE = "Number Guess Game";
   static final String VIEW_NAME = "game_form.ftl";
+  static final String BOUND_ATTR = "bound";
 
   private final TemplateEngine templateEngine;
 
@@ -58,13 +59,16 @@ public class GetGameRoute implements Route {
      * In either case, we will redirect back to home.
      */
     if (playerServices != null) {
-      GuessGame game = playerServices.currentGame();
+      GuessGame game = playerServices.currentGame(Integer.parseInt(request.queryParams("diff"))); //the user chose a difficulty from the form
 
       // build the View-Model
       final Map<String, Object> vm = new HashMap<>();
       vm.put(GetHomeRoute.TITLE_ATTR, TITLE);
       vm.put(GAME_BEGINS_ATTR, game.isGameBeginning());
       vm.put(GUESSES_LEFT_ATTR, game.guessesLeft());
+      vm.put(BOUND_ATTR, game.bound() - 1); //for game_form
+
+
       // render the Game Form view
       return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     } else {

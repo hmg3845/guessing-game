@@ -52,7 +52,7 @@ public class GameCenter {
     return playerServices; //realised i MAY not be able to sue the getter if i dint change this bit here
   }
 
-    public PlayerServices getPlayerServices() { //gotta make this getter in order to grab in route
+  public PlayerServices getPlayerServices() { //gotta make this getter in order to grab in route
         return playerServices;
     }
 
@@ -62,8 +62,8 @@ public class GameCenter {
    * @return
    *   A new {@link GuessGame}
    */
-  public GuessGame getGame() {
-    return new GuessGame();
+  public GuessGame getGame(int diff) {
+    return new GuessGame(diff);
   }
 
   /**

@@ -24,7 +24,7 @@ public class GuessGame {
    * components to read it; especially for unit testing.
    */
   public static final int UPPER_BOUND = 10;
-  public static final int UPPER_BOUND_DIFF = 24; //added for difficulty enhancement
+  public static final int UPPER_BOUND_DIFF = 25; //added for difficulty enhancement
 
   /**
    * The number of guess attempts alloted. This is public so that other
@@ -41,7 +41,9 @@ public class GuessGame {
 
   private final int numberToGuess;
   private GuessResult lastResult = null;
-  private int howManyGuessesLeft = NUM_OF_GUESSES;
+  private int howManyGuessesLeft;
+  private int game_type;
+  private int bound;
 
   //
   // Constructors
@@ -50,13 +52,31 @@ public class GuessGame {
   /**
    * Create a guessing game with a known number.
    *
-   * @param numberToGuess
-   *          The number to be guessed.
+   * @param diff
+   *          The player's selected difficulty.
    *
    * @throws IllegalArgumentException
-   *    when the {@code numberToGuess} is out of range
+   *    when the {@code numberToGuess} is out of range.
    */
-  public GuessGame(final int numberToGuess) {
+  public GuessGame(final int diff) { //CHANGE 1: added actually difficulty edits for bounds and guess num
+    game_type = diff;
+    //bound = 0;
+
+    if (diff == 1) {
+      howManyGuessesLeft = NUM_OF_GUESSES; //standard
+      bound = UPPER_BOUND;
+    }
+    else if (diff == 2) {
+      howManyGuessesLeft = NUM_OF_GUESSES_MODERATE; //moderate
+      bound = UPPER_BOUND_DIFF;
+    }
+    else {
+      howManyGuessesLeft = NUM_OF_GUESSES_MODERATE; //difficult
+      bound = UPPER_BOUND;
+    }
+
+    final int numberToGuess = RANDOM.nextInt(bound); //made into final int cuz line 85 kept getting made and idk about the temps
+
     // validate arguments
     if (numberToGuess < 0 || numberToGuess >= UPPER_BOUND) {
       throw new IllegalArgumentException("numberToGuess is out of range");
@@ -66,13 +86,7 @@ public class GuessGame {
     this.numberToGuess = numberToGuess;
   }
 
-  /**
-   * Create a guessing game with a random number.
-   *
-   */
-  public GuessGame() {
-      this(RANDOM.nextInt(UPPER_BOUND));
-  }
+  //CHANGE: Got rid of "making a game with a random number", games are dependent on the difficulty the player chooses
 
   //
   // Public methods
@@ -85,7 +99,10 @@ public class GuessGame {
    * @return true if no guesses have been made, otherwise, false
    */
   public synchronized boolean isGameBeginning() {
-    return howManyGuessesLeft == NUM_OF_GUESSES;
+    if (game_type != 2) { //not moderate
+      return howManyGuessesLeft == NUM_OF_GUESSES;
+    }
+    return howManyGuessesLeft == NUM_OF_GUESSES_MODERATE;
   }
 
   /**
@@ -98,7 +115,10 @@ public class GuessGame {
    * @return true if the guess falls within the game bounds, otherwise, false
    */
   public boolean isValidGuess(int guess) {
-    return guess >= 0 && guess < UPPER_BOUND;
+    if (game_type == 1) { //is standard
+      return guess >= 0 && guess < UPPER_BOUND;
+    }
+    return guess >= 0 && guess < UPPER_BOUND_DIFF;
   }
 
   /**
@@ -114,8 +134,17 @@ public class GuessGame {
    */
   public synchronized GuessResult makeGuess(final int myGuess) {
     final GuessResult thisResult;
+    int bound; //cuz we have difficulties now
+
+    if (game_type == 1) {
+      bound = UPPER_BOUND;
+    }
+    else {
+      bound = UPPER_BOUND_DIFF;
+    }
+
     // validate arguments
-    if (myGuess < 0 || myGuess >= UPPER_BOUND) {
+    if (myGuess < 0 || myGuess >= bound) { //CHANGE: UPPER_BOUND -> bound (legit seems to be only change needed)
       thisResult = GuessResult.INVALID;
     } else {
       // assert that the game isn't over
@@ -129,7 +158,7 @@ public class GuessGame {
       if (isCorrect) {
         thisResult = GuessResult.WON;
       } else if (hasMoreGuesses()) {
-        if (myGuess > numberToGuess) { //LOCAL DUMBASS MIXES UP SIGNS
+        if (myGuess > numberToGuess) { //FIX: Changed "<" to ">" (AKA LOCAL DUMBASS MIXES UP SIGNS)
           thisResult = GuessResult.LOWER; //HINTS
         }
         else {
@@ -172,6 +201,16 @@ public class GuessGame {
    */
   public synchronized int guessesLeft() {
     return howManyGuessesLeft;
+  }
+
+  /**
+   * Queries for game's bound
+   *
+   * @return the upper bound of this game
+   */
+
+  public synchronized int bound() {
+    return bound;
   }
 
   /**

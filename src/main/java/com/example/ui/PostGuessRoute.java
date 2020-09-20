@@ -54,8 +54,8 @@ public class PostGuessRoute implements Route {
   /**
    * Make an error message when the guess is not in the guessing range.
    */
-  static String makeInvalidArgMessage(final String guessStr) {
-    return String.format("You entered %s; make a guess between zero and nine.", guessStr);
+  static String makeInvalidArgMessage(final String guessStr, int bound) {
+    return String.format("You entered %s; make a guess between zero and %d.", guessStr, bound - 1);
   }
 
   //
@@ -116,6 +116,7 @@ public class PostGuessRoute implements Route {
     if(playerServices != null) {
       vm.put(GetGameRoute.GAME_BEGINS_ATTR, playerServices.isStartingGame());
       vm.put(GetGameRoute.GUESSES_LEFT_ATTR, playerServices.guessesLeft());
+      vm.put(GetGameRoute.BOUND_ATTR, playerServices.getGame().bound()); //for invalid guesses
 
       // retrieve request parameter
       final String guessStr = request.queryParams(GUESS_PARAM);
@@ -133,7 +134,7 @@ public class PostGuessRoute implements Route {
       ModelAndView mv;
       switch (playerServices.makeGuess(guess)) {
         case INVALID:
-          mv = error(vm, makeInvalidArgMessage(guessStr));
+          mv = error(vm, makeInvalidArgMessage(guessStr, playerServices.getGame().bound()));
           break;
 
         case WRONG:
@@ -150,12 +151,12 @@ public class PostGuessRoute implements Route {
           break;
 
         case LOWER:
-          vm.put(GetGameRoute.GUESSES_LEFT_ATTR, playerServices.guessesLeft()); //HINT CASES
+          vm.put(GetGameRoute.GUESSES_LEFT_ATTR, playerServices.guessesLeft()); //HINT CASE
           mv = error(vm, LOWER);
           break;
 
         case HIGHER:
-          vm.put(GetGameRoute.GUESSES_LEFT_ATTR, playerServices.guessesLeft());
+          vm.put(GetGameRoute.GUESSES_LEFT_ATTR, playerServices.guessesLeft()); //HINT CASE
           mv = error(vm, HIGHER);
           break;
 

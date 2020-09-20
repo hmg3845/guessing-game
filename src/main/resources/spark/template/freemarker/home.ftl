@@ -18,12 +18,18 @@
       
       <#if newPlayer>
         <p>
-          <!---<a href="/game">Want to play a game?!?</a>  gotta make difficulty options-->
+          <!---gotta make difficulty options-->
           <form id="diff_form" action="/game" method="GET">
-          <input type="radio" id="1" name="diff" value="1"> Standard
-          <input type="radio" id="2" name="diff" value="2"> Moderate
-          <input type="radio" id="3" name="diff" value="3"> Difficult
-          <button type="submit">Want to play a game?!?</button>
+              <div class="form-group">
+                  <input type="radio" id="1" name="diff" value="1"> Standard
+                  <input type="radio" id="2" name="diff" value="2"> Moderate
+                  <input type="radio" id="3" name="diff" value="3"> Difficult
+              </div>
+              <p>
+              <div class="form-group">
+                  <button type="submit">Want to play a game?!?</button>
+              </div>
+              </p>
           </form>
 
         </p>
@@ -32,18 +38,34 @@
           <p>
             Congratulations!  You must have read my mind.
             <br/><br/>
-            <a href="/game">Do it again</a>
+            <form id="diff_form" action="/game" method="GET">
+              <div class="form-group">
+                    <input type="radio" id="1" name="diff" value="1"> Standard
+                    <input type="radio" id="2" name="diff" value="2"> Moderate
+                    <input type="radio" id="3" name="diff" value="3"> Difficult
+                </div>
+                <p>
+                <div class="form-group">
+                    <button type="submit">Do it again</button>
+                </div>
+                </p>
+            </form>
           </p>
         <#else>
           <p>
             Aww, too bad.  Better luck next time.
             <br/><br/>
-            <!---<a href="/game">How about it?</a>-->
             <form id="diff_form" action="/game" method="GET">
-              <input type="radio" id="1" name="diff" value="1"> Standard
-              <input type="radio" id="2" name="diff" value="2"> Moderate
-              <input type="radio" id="3" name="diff" value="3"> Difficult
-              <button type="submit">Want to play a game?!?</button>
+             <div class="form-group">
+                <input type="radio" id="1" name="diff" value="1"> Standard
+                <input type="radio" id="2" name="diff" value="2"> Moderate
+                <input type="radio" id="3" name="diff" value="3"> Difficult
+            </div>
+            <p>
+            <div class="form-group">
+                <button type="submit">How about it?</button>
+            </div>
+            </p>
             </form>
           </p>
         </#if>
