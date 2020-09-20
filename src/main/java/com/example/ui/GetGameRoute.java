@@ -58,8 +58,9 @@ public class GetGameRoute implements Route {
     /* A null playerServices indicates a timed out session or an illegal request on this URL.
      * In either case, we will redirect back to home.
      */
+
     if (playerServices != null) {
-      GuessGame game = playerServices.currentGame(Integer.parseInt(request.queryParams("diff"))); //the user chose a difficulty from the form
+      GuessGame game = playerServices.currentGame(Integer.parseInt(request.queryParams("diff")));
 
       // build the View-Model
       final Map<String, Object> vm = new HashMap<>();

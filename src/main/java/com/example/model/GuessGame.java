@@ -60,7 +60,7 @@ public class GuessGame {
    */
   public GuessGame(final int diff) { //CHANGE 1: added actually difficulty edits for bounds and guess num
     game_type = diff;
-    //bound = 0;
+    bound = 0; //FIX 1: Gotta make it zero every time in order to reset!!!!!!
 
     if (diff == 1) {
       howManyGuessesLeft = NUM_OF_GUESSES; //standard
@@ -114,7 +114,7 @@ public class GuessGame {
    *
    * @return true if the guess falls within the game bounds, otherwise, false
    */
-  public boolean isValidGuess(int guess) {
+  public boolean isValidGuess(int guess) { //NOTE: IDE SAYS METHOD IS NEVER USED! THAT IS NOT CORRECT! DON'T DELETE!!!!!!!!!!!
     if (game_type == 1) { //is standard
       return guess >= 0 && guess < UPPER_BOUND;
     }
